@@ -1,0 +1,168 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: 50px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 150px ;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+header #head{
+    margin-top: 350px;
+    /* padding-top: 2rem; */
+}
+
+.logo {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Main Panels */
+main {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+}
+
+.panel {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 45%;
+    min-width: 320px;
+}
+
+.panel h2 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+/* Forms */
+input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+button {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    transition: background 0.3s ease;
+}
+
+.primary {
+    background-color: #4caf50;
+    color: white;
+}
+
+.primary:hover {
+    background-color: #45a049;
+}
+
+.secondary {
+    background-color: #2196f3;
+    color: white;
+}
+
+.secondary:hover {
+    background-color: #1976d2;
+}
+
+.copy-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.copy-btn:hover {
+    background-color: #e53935;
+}
+
+/* Code Display */
+.code-display {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.code {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Retrieved Content */
+.content-display {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.image-result {
+    max-width: 100%;
+    margin-top: 1rem;
+    border-radius: 8px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ddd;
+    color: #555;
+}
+
+.text-result{
+    white-space: pre-wrap;
+    font-family: monospace;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .panel {
+        width: 90%;
+    }
+}
