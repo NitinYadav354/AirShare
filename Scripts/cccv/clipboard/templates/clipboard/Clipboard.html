@@ -48,8 +48,10 @@
                     {% if items %}
                     <div class="content-display">
                         {% if items.text %}
-                        <p class="text-result">{{ items.text | linebreaks | }}</p>
-                        <button onclick="copyText()" class="btn copy-btn">Copy Text</button>
+                        <pre class="text-result">{{ items.text}}</pre>
+                    </div>
+                    <div>
+                        <button onclick="CopyText()" class="btn copy-btn">Copy Text</button>
                         {% endif %}
                         {% if items.image %}
                         <img src="{{ items.image.url }}" class="image-result" alt="Uploaded Image">
@@ -74,9 +76,14 @@
     </div>
 
     <script>
-        function copyText() {
-            navigator.clipboard.writeText("{{ items.text }}");
-            alert("Text copied to clipboard!");
+        function CopyText() {
+            try {
+                await navigator.clipboard.writeText("{{ items.text }}");
+                console.log("Text copied successfully!");
+              } catch (error) {
+                console.error("Failed to copy text:", error);
+                alert("Copy failed. Please try again.");
+              }
         }
     </script>
 </body>
