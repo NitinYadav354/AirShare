@@ -48,15 +48,17 @@
                     {% if items %}
                     <div class="content-display">
                         {% if items.text %}
-                        <p class="text-result">{{ items.text | linebreaks | }}</p>
-                        <button onclick="copyText()" class="btn copy-btn">Copy Text</button>
+                        <!-- <pre class="text-result">{{ items.text}}</pre> -->
+                        <textarea class="text-result" cols="40" rows="10" readonly>{{ items.text }}</textarea> 
+                    
+                        <button onclick="CopyText()" class="btn copy-btn">Copy Text</button>
                         {% endif %}
                         {% if items.image %}
                         <img src="{{ items.image.url }}" class="image-result" alt="Uploaded Image">
-                        <a href="{{ items.image.url }}" download>Download Image</a>
+                        <button class="btn-download"> <a  href="{{ items.image.url }}" download>Download Image</a> </button>
                         {% endif %}
                         {% if items.documents %}
-                        <a href="{{ items.documents.url }}" download>Download Document</a>
+                        <button class="btn-download" > <a  href="{{ items.documents.url }}" download>Download Document</a> </button>
                         {% endif %}
                     </div>
                     {% elif error %}
@@ -74,10 +76,28 @@
     </div>
 
     <script>
-        function copyText() {
-            navigator.clipboard.writeText("{{ items.text }}");
-            alert("Text copied to clipboard!");
-        }
+        async function CopyText() {
+    const textToCopy = "{{ items.text|escapejs }}"; // Escape the text for JavaScript
+    try {
+        await navigator.clipboard.writeText(textToCopy);
+        console.log("Text copied successfully!");
+        alert("Text copied to clipboard!");
+    } catch (error) {
+        console.error("Failed to copy text:", error);
+        alert("Copy failed. Please try again.");
+    }
+}
+
+
+        // function CopyText() {
+        //     try {
+        //         await navigator.clipboard.writeText("{{ items.text }}");
+        //         console.log("Text copied successfully!");
+        //       } catch (error) {
+        //         console.error("Failed to copy text:", error);
+        //         alert("Copy failed. Please try again.");
+        //       }
+        // }
     </script>
 </body>
 
