@@ -18,13 +18,12 @@
 ## Technologies Used
 - **Backend**: Django
 - **Frontend**: HTML, CSS, JavaScript
-- **Database**: SQLite / PostgreSQL
-- **Hosting**: Heroku / DigitalOcean
+- **Database**: SQLite 
 
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/online-clipboard.git
+   git clone https://github.com/NitinYadav354/online-clipboard.git
    ```
 2. Navigate to the project directory:
    ```bash
