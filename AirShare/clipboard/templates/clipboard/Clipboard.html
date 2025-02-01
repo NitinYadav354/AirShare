@@ -1,104 +1,122 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AirShare</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ctrl C - Share & Retrieve</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-
-<body>
+  <body>
     <div class="wrapper">
+      <!-- Header Section -->
+      <header id="head">
+        <h1 class="logo">⚡ AirShare ⚡</h1>
+        <p class="tagline">Share quickly, retrieve seamlessly.</p>
+      </header>
 
-        <!-- Header Section -->
-        <header id="head" >
-            <h1 class="logo">⚡ Ctrl Clipboard</h1>
-            <p class="tagline">Share quickly, retrieve seamlessly.</p>
-        </header>
+      <!-- Main Panels -->
+      <main>
+        <section id="send-panel" class="panel">
+          <h2>📤 Send Content</h2>
+          <form
+            method="POST"
+            enctype="multipart/form-data"
+            action="{% url 'submit_clipboard' %}"
+          >
+            {% csrf_token %} {{ form.as_p }}
+            <button type="submit" class="btn primary">
+              Generate Code & Send
+            </button>
+          </form>
 
-        <!-- Main Panels -->
-        <main>
-            <section id="send-panel" class="panel">
-                <h2>📤 Send Content</h2>
-                <form method="POST" enctype="multipart/form-data" action="{% url 'submit_clipboard' %}">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn primary">Generate Code & Send</button>
-                </form>
+          {% if code %}
+          <div class="code-display">
+            <p>Your Code:</p>
+            <span class="code">{{ code }}</span>
+            <small>Share this code with the receiver.</small>
+          </div>
+          {% endif %}
+        </section>
 
-                {% if code %}
-                <div class="code-display">
-                    <p>Your Code:</p>
-                    <span class="code">{{ code }}</span>
-                    <small>Share this code with the receiver.</small>
-                </div>
-                {% endif %}
-            </section>
+        <section id="retrieve-panel" class="panel">
+          <h2>📥 Retrieve Content</h2>
+          <form method="GET" action="{% url 'fetch_clipboard' %}">
+            <input
+              type="text"
+              name="Code"
+              placeholder="Enter your code"
+              required
+            />
+            <button type="submit" class="btn secondary">Retrieve</button>
+          </form>
 
-            <section id="retrieve-panel" class="panel">
-                <h2>📥 Retrieve Content</h2>
-                <form method="GET" action="{% url 'fetch_clipboard' %}">
-                    <input type="text" name="Code" placeholder="Enter your code" required>
-                    <button type="submit" class="btn secondary">Retrieve</button>
-                </form>
+          <div class="retrieved">
+            {% if items %}
+            <div class="content-display">
+              {% if items.text %}
+              <!-- <pre class="text-result">{{ items.text}}</pre> -->
+              <textarea class="text-result" cols="40" rows="10" readonly>
+{{ items.text }}</textarea
+              >
 
-                <div class="retrieved">
-                    {% if items %}
-                    <div class="content-display">
-                        {% if items.text %}
-                        <!-- <pre class="text-result">{{ items.text}}</pre> -->
-                        <textarea class="text-result" cols="40" rows="10" readonly>{{ items.text }}</textarea> 
-                    
-                        <button onclick="CopyText()" class="btn copy-btn">Copy Text</button>
-                        {% endif %}
-                        {% if items.image %}
-                        <img src="{{ items.image.url }}" class="image-result" alt="Uploaded Image">
-                        <button class="btn-download"> <a  href="{{ items.image.url }}" download>Download Image</a> </button>
-                        {% endif %}
-                        {% if items.documents %}
-                        <button class="btn-download" > <a  href="{{ items.documents.url }}" download>Download Document</a> </button>
-                        {% endif %}
-                    </div>
-                    {% elif error %}
-                    <p class="error">{{ error }}</p>
-                    {% endif %}
-                </div>
-            </section>
-        </main>
+              <button onclick="CopyText()" class="btn copy-btn">
+                Copy Text
+              </button>
+              {% endif %} {% if items.image %}
+              <img
+                src="{{ items.image.url }}"
+                class="image-result"
+                alt="Uploaded Image"
+              />
+              <button class="btn-download">
+                <a href="{{ items.image.url }}" download>Download Image</a>
+              </button>
+              {% endif %} {% if items.documents %}
+              <button class="btn-download">
+                <a href="{{ items.documents.url }}" download
+                  >Download Document</a
+                >
+              </button>
+              {% endif %}
+            </div>
+            {% elif error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+          </div>
+        </section>
+      </main>
 
-        <!-- Footer Section -->
-        <footer>
-            <p>&copy; 2024 Ctrl Clipboard. Fast, Simple, Secure.</p>
-        </footer>
-
+      <!-- Footer Section -->
+      <footer>
+        <p>&copy; 2024 Ctrl Clipboard. Fast, Simple, Secure.</p>
+      </footer>
     </div>
 
     <script>
-        async function CopyText() {
-    const textToCopy = "{{ items.text|escapejs }}"; // Escape the text for JavaScript
-    try {
-        await navigator.clipboard.writeText(textToCopy);
-        console.log("Text copied successfully!");
-        alert("Text copied to clipboard!");
-    } catch (error) {
-        console.error("Failed to copy text:", error);
-        alert("Copy failed. Please try again.");
-    }
-}
+              async function CopyText() {
+          const textToCopy = "{{ items.text|escapejs }}"; // Escape the text for JavaScript
+          try {
+              await navigator.clipboard.writeText(textToCopy);
+              console.log("Text copied successfully!");
+              alert("Text copied to clipboard!");
+          } catch (error) {
+              console.error("Failed to copy text:", error);
+              alert("Copy failed. Please try again.");
+          }
+      }
 
 
-        // function CopyText() {
-        //     try {
-        //         await navigator.clipboard.writeText("{{ items.text }}");
-        //         console.log("Text copied successfully!");
-        //       } catch (error) {
-        //         console.error("Failed to copy text:", error);
-        //         alert("Copy failed. Please try again.");
-        //       }
-        // }
+      function CopyText() {
+          try {
+              await navigator.clipboard.writeText("{{ items.text }}");
+              console.log("Text copied successfully!");
+            } catch (error) {
+              console.error("Failed to copy text:", error);
+              alert("Copy failed. Please try again.");
+            }
+      }
     </script>
-</body>
-
+  </body>
 </html>

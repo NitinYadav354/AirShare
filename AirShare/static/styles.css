@@ -7,13 +7,13 @@
 }
 
 body {
-    margin-top: -100px;
-    background-color: #f3f4f6;
+    background-color: #e9ecef;
     display: flex;
     justify-content: center;
     align-items: center;
-    max-height: 100vh;
-    margin-top: 50px;
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
 }
 
 .wrapper {
@@ -21,64 +21,80 @@ body {
     flex-direction: column;
     width: 90%;
     max-width: 1200px;
-    margin-top: 150px ;
-
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* Header */
 header {
     text-align: center;
     padding: 2rem 0;
 }
 
-header #head{
-    margin-top: 350px;
-    /* padding-top: 2rem; */
+header #head {
+    margin-top: 20px;
 }
 
 .logo {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 0.5rem;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #2c3e50;
 }
 
 .tagline {
-    font-size: 1.2rem;
-    color: #555;
+    font-size: 1.4rem;
+    color: #7f8c8d;
 }
 
-/* Main Panels */
 main {
     display: flex;
     gap: 2rem;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-bottom: 2rem;
 }
 
 .panel {
-    background-color: white;
+    background-color: #fff;
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     width: 45%;
     min-width: 320px;
-    max-height: 50rem;
-    overflow-x: auto;
+    max-height: auto;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.panel:hover {
+    transform: translateY(-5px);
 }
 
 .panel h2 {
-    color: #333;
+    color: #34495e;
     margin-bottom: 1rem;
+    font-size: 1.6rem;
+    font-weight: 600;
 }
 
-/* Forms */
-input {
+input,
+textarea {
     width: 100%;
     padding: 0.8rem;
     margin-top: 0.5rem;
     margin-bottom: 1rem;
     border: 1px solid #ccc;
     border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
 }
 
 button {
@@ -87,9 +103,9 @@ button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-top: 0.5rem;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.3s;
 }
 
 .primary {
@@ -99,6 +115,7 @@ button {
 
 .primary:hover {
     background-color: #45a049;
+    transform: translateY(-2px);
 }
 
 .secondary {
@@ -108,54 +125,46 @@ button {
 
 .secondary:hover {
     background-color: #1976d2;
+    transform: translateY(-2px);
 }
 
-.copy-btn {
-    background-color: #f44336;
+.copy-btn,
+.btn-download {
+    background-color: #f49b36;
     color: white;
-    /* max-width: 10rem; */
 }
 
-.btn-download{
-    background-color: #f44336;
-    color: white;
-    /* max-width: 10rem; */
-    color: white;
+.copy-btn:hover,
+.btn-download:hover {
+    background-color: #e57535;
+    transform: translateY(-2px);
 }
-button a{
+
+button a {
     color: white;
     text-decoration: none;
 }
 
-.copy-btn:hover .btn-download:hover {
-    background-color: #e53935;
-}
-
-/* Code Display */
 .code-display {
     margin-top: 1rem;
     padding: 1rem;
     background-color: #f0f0f0;
     border-radius: 8px;
     text-align: center;
+    font-family: monospace;
+    font-size: 0.9rem;
 }
 
-.code {
-    font-weight: bold;
-    color: #333;
-}
-
-/* Retrieved Content */
-
-textarea{
+textarea {
     margin: 0 0 1rem 0;
     border-radius: 0.5rem;
     padding: 1rem;
     max-width: 28rem;
     max-height: 20rem;
+    overflow-x: auto;
 }
 
-.retrieved{
+.retrieved {
     margin: 2rem 1rem;
     text-align: center !important;
 }
@@ -166,24 +175,23 @@ textarea{
     border-radius: 8px;
 }
 
-/* Footer */
 footer {
     text-align: center;
     padding: 1rem;
     background-color: #f8f9fa;
     border-top: 1px solid #ddd;
     color: #555;
+    font-size: 0.9rem;
 }
 
-.text-result{
+.text-result {
     white-space: pre-wrap;
     font-family: monospace;
-   height: 10rem;
+    height: 10rem;
     font-size: 14px;
     line-height: 2rem;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     main {
         flex-direction: column;
@@ -192,5 +200,9 @@ footer {
 
     .panel {
         width: 90%;
+    }
+
+    .wrapper {
+        padding: 15px;
     }
 }
