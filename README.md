@@ -1,4 +1,4 @@
-# Online Clipboard
+# AirShare
 
 **A simple copy-paste platform for sharing text, images, and documents without the need for login.**
 
@@ -23,7 +23,7 @@
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/NitinYadav354/online-clipboard.git
+   git clone https://github.com/NitinYadav354/AirShare.git
    ```
 2. Navigate to the project directory:
    ```bash
