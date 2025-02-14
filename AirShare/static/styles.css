@@ -92,8 +92,8 @@ textarea {
 
 input:focus,
 textarea:focus {
-    border-color: #4caf50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    border-color: #4c4eaf;
+    box-shadow: 0 0 5px rgba(76, 107, 175, 0.5);
     outline: none;
 }
 
@@ -153,6 +153,13 @@ button a {
     text-align: center;
     font-family: monospace;
     font-size: 0.9rem;
+}
+
+.code{
+    font-weight: 600;
+    font-size: x-large;
+    color: #535353;
+    
 }
 
 textarea {
