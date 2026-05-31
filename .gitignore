@@ -11,6 +11,7 @@ env/
 
 # Database
 *.sqlite3
+uploads/
 
 # IDE files
 *.idea/
