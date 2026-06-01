@@ -2,18 +2,19 @@
 * {
     margin: 0;
     padding: 0;
+
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
 }
 
 body {
-    background-color: #e9ecef;
+    background-color: #1a1a1a;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
-    color: #333;
+    color: #e0e0e0;
 }
 
 .wrapper {
@@ -24,8 +25,8 @@ body {
     margin: 0 auto;
     padding: 30px;
     border-radius: 12px;
-    background-color: white;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    background-color: #2d2d2d;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
 header {
@@ -40,12 +41,12 @@ header #head {
 .logo {
     font-size: 2.8rem;
     font-weight: 700;
-    color: #2c3e50;
+    color: #ffffff;
 }
 
 .tagline {
     font-size: 1.4rem;
-    color: #7f8c8d;
+    color: #b0b0b0;
 }
 
 main {
@@ -56,10 +57,10 @@ main {
 }
 
 .panel {
-    background-color: #fff;
+    background-color: #3a3a3a;
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     width: 45%;
     min-width: 320px;
     max-height: auto;
@@ -72,7 +73,7 @@ main {
 }
 
 .panel h2 {
-    color: #34495e;
+    color: #ffffff;
     margin-bottom: 1rem;
     font-size: 1.6rem;
     font-weight: 600;
@@ -84,9 +85,11 @@ textarea {
     padding: 0.8rem;
     margin-top: 0.5rem;
     margin-bottom: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid #555;
     border-radius: 8px;
     font-size: 1rem;
+    background-color: #2d2d2d;
+    color: #e0e0e0;
     transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -148,17 +151,18 @@ button a {
 .code-display {
     margin-top: 1rem;
     padding: 1rem;
-    background-color: #f0f0f0;
+    background-color: #1a1a1a;
     border-radius: 8px;
     text-align: center;
     font-family: monospace;
     font-size: 0.9rem;
+    color: #e0e0e0;
 }
 
 .code{
     font-weight: 600;
     font-size: x-large;
-    color: #535353;
+    color: #ffffff;
     
 }
 
@@ -185,9 +189,9 @@ textarea {
 footer {
     text-align: center;
     padding: 1rem;
-    background-color: #f8f9fa;
-    border-top: 1px solid #ddd;
-    color: #555;
+    background-color: #1a1a1a;
+    border-top: 1px solid #444;
+    color: #b0b0b0;
     font-size: 0.9rem;
 }
 
@@ -197,6 +201,10 @@ footer {
     height: 10rem;
     font-size: 14px;
     line-height: 2rem;
+    color: #e0e0e0;
+    background-color: #1a1a1a;
+    padding: 1rem;
+    border-radius: 4px;
 }
 
 @media (max-width: 768px) {
