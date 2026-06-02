@@ -87,8 +87,8 @@ WSGI_APPLICATION = 'airshare.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=env('DATABASE_URL', default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'))
-        conn_max_age=600,
+        default=env('DATABASE_URL', default='sqlite:///' + str(BASE_DIR / 'db.sqlite3')),
+        conn_max_age=600
     )
 }
 
@@ -144,6 +144,9 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
