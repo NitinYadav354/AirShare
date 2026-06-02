@@ -28,7 +28,7 @@ def fetch_clipboard(request):
         try:
             clipboard_item  = ClipboardItems.objects.get(UniqueCode = code)
             clipboard_item.text = process_text(clipboard_item.text)
-            # clipboard_item.delete()
+            clipboard_item.delete()
             # if clipboard_item.image:
             #     os.remove(clipboard_item.image.path)
             # if clipboard_item.documents:
