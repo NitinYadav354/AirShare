@@ -16,7 +16,7 @@ def delete_expired_items(expired_entry):
         cloudinary.uploader.destroy(clipboard_item.documents.name)
 
 def delete_expired():
-    expiration_time = timezone.now() - timedelta(seconds=10)
+    expiration_time = timezone.now() - timedelta(seconds=300)
     expired_entries = ClipboardItems.objects.filter(created_at__lt = expiration_time)
     for entry in expired_entries:
         delete_expired_items(entry)
