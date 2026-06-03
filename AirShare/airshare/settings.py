@@ -160,6 +160,13 @@ if not DEBUG:
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # celery configuration
-CELERY_BROKER_URL = "redis://localhost:7000/0"
+CELERY_BROKER_URL = env('CELERY_BROKER_URL', default="redis://localhost:7000/0")
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+
+CELERY_BEAT_SCHEDULE = {
+    'delete-expired-entries': {
+        'task': 'clipboard.tasks.delete_expired',
+        'schedule': 10.0,
+    },
+}
