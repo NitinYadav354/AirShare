@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import submit_clipboard, sumbit_clipboard, fetch_clipboard
+from .views import submit_clipboard, fetch_clipboard
 from django.conf import settings
 from django.conf.urls.static import static
 
