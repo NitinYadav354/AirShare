@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import sumbit_clipboard, fetch_clipboard
+from .views import submit_clipboard, sumbit_clipboard, fetch_clipboard
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('',sumbit_clipboard, name = 'submit_clipboard'),
+    path('',submit_clipboard, name = 'submit_clipboard'),
     path('fetch/', fetch_clipboard, name = 'fetch_clipboard'),
 ]
 
