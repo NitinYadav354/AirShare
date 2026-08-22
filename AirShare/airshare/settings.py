@@ -144,6 +144,12 @@ if not DEBUG:
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+redis_URI = env('REDIS_URI')
+CELERY_BROKER_URL = redis_URI
+CELERY_RESULT_BACKEND = redis_URI
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
