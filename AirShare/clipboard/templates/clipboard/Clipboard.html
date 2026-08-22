@@ -111,17 +111,6 @@
               alert("Copy failed. Please try again.");
           }
       }
-
-
-      function CopyText() {
-          try {
-              await navigator.clipboard.writeText("{{ items.text }}");
-              console.log("Text copied successfully!");
-            } catch (error) {
-              console.error("Failed to copy text:", error);
-              alert("Copy failed. Please try again.");
-            }
-      }
     </script>
   </body>
 </html>
