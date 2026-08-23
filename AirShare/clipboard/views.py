@@ -4,6 +4,7 @@ from .forms import ClipboardItemsForm
 from django.utils import timezone
 from datetime import timedelta
 import cloudinary.uploader
+from .tasks import del_clipboard_item
 # Create your views here.
 
 def submit_clipboard(request):
@@ -13,8 +14,9 @@ def submit_clipboard(request):
         if form.is_valid():
             print(form.errors)
             Clipboard_instance = form.save()
+            delay_seconds = (Clipboard_instance.expires_at - timezone.now()).total_seconds()
+            del_clipboard_item.apply_async(args=[Clipboard_instance.id], countdown=max(delay_seconds, 0))
             code = Clipboard_instance.UniqueCode
-            delete_expired()
 
     else:
         form = ClipboardItemsForm()
