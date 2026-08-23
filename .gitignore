@@ -24,3 +24,6 @@ uploads/
 # Other
 *.DS_Store  # For macOS
 *.egg-info/
+
+# Celery Beat
+celerybeat-schedule*
