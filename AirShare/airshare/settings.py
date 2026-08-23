@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import environ
 import dj_database_url
+from celery.schedules import crontab
 
 env = environ.Env()
 environ.Env.read_env()
@@ -78,6 +79,13 @@ TEMPLATES = [
         },
     },
 ]
+
+CELERY_BEAT_SCHEDULE = {
+    'sweep-expired-items': {
+        'task': 'clipboard.tasks.sweap_expired_items',
+        'schedule': crontab(minute='*/30'),
+    },
+}
 
 WSGI_APPLICATION = 'airshare.wsgi.application'
 
