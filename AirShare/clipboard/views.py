@@ -27,17 +27,16 @@ def process_text(text):
     return text.replace("\t", "    ")
 
 def fetch_clipboard(request):
-    code = request.GET.get('Code', None)
-    form = ClipboardItemsForm()
-    if code:
+    if request.method == 'POST':
+        code = request.POST.get('Code')
+        form = ClipboardItemsForm()
         try:
-            clipboard_item  = ClipboardItems.objects.get(UniqueCode = code)
-            clipboard_item.text = process_text(clipboard_item.text)
-            delete_expired_items(clipboard_item)
-            clipboard_item.delete()
-
-            return render(request, 'clipboard/Clipboard.html', {'items': clipboard_item,'form': form})
+            clipboard_item = ClipboardItems.objects.get(UniqueCode=code, isfetched=False)
+            clipboard_item.text = process_text(clipboard_item.text) if clipboard_item.text else clipboard_item.text
+            clipboard_item.isfetched = True
+            clipboard_item.save()
+            del_clipboard_item.delay(clipboard_item.id)
+            return render(request, 'clipboard/Clipboard.html', {'items': clipboard_item, 'form': form})
         except ClipboardItems.DoesNotExist:
             return render(request, 'clipboard/Clipboard.html', {'error': "Not found", 'form': form})
-    else:
-        return render(request, 'clipboard/Clipboard.html')
+    return render(request, 'clipboard/Clipboard.html', {'form': ClipboardItemsForm()})
