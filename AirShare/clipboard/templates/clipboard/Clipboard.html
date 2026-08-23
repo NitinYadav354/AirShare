@@ -47,7 +47,8 @@
 
         <section id="retrieve-panel" class="panel">
           <h2>📥 Retrieve Content</h2>
-          <form method="GET" action="{% url 'fetch_clipboard' %}">
+          <form method="POST" action="{% url 'fetch_clipboard' %}">
+            {% csrf_token %}
             <input
               type="text"
               name="Code"
