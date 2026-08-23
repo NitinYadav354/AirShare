@@ -4,23 +4,7 @@ from .forms import ClipboardItemsForm
 from django.utils import timezone
 from datetime import timedelta
 import cloudinary.uploader
-
 # Create your views here.
-
-def delete_expired_items(expired_entry):
-    clipboard_item = expired_entry
-    if clipboard_item.image and clipboard_item.image.name:
-            cloudinary.uploader.destroy(clipboard_item.image.name)
-
-    if clipboard_item.documents and clipboard_item.documents.name:
-        cloudinary.uploader.destroy(clipboard_item.documents.name)
-
-def delete_expired():
-    expiration_time = timezone.now() - timedelta(seconds=300)
-    expired_entries = ClipboardItems.objects.filter(created_at__lt = expiration_time)
-    for entry in expired_entries:
-        delete_expired_items(entry)
-    expired_entries.delete()
 
 def submit_clipboard(request):
     code = None
