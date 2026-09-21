@@ -80,12 +80,13 @@ TEMPLATES = [
     },
 ]
 
-CELERY_BEAT_SCHEDULE = {
-    'sweep-expired-items': {
-        'task': 'clipboard.tasks.sweap_expired_items',
-        'schedule': crontab(minute='*/30'),
-    },
-}
+if DEBUG:
+    CELERY_BEAT_SCHEDULE = {
+        'sweep-expired-items': {
+            'task': 'clipboard.tasks.sweap_expired_items',
+            'schedule': crontab(minute='*/30'),
+        },
+    }
 
 WSGI_APPLICATION = 'airshare.wsgi.application'
 
@@ -152,14 +153,15 @@ if not DEBUG:
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-REDIS_URI = env('REDIS_URI')
-CELERY_BROKER_URL = REDIS_URI
-CELERY_RESULT_BACKEND = REDIS_URI
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
+if DEBUG:
+    REDIS_URI = env('REDIS_URI')
+    CELERY_BROKER_URL = REDIS_URI
+    CELERY_RESULT_BACKEND = REDIS_URI
+    CELERY_ACCEPT_CONTENT = ['json']
+    CELERY_TASK_SERIALIZER = 'json'
 
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_BROWSER_XSS_FILTER = True
