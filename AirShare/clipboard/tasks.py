@@ -22,7 +22,7 @@ def del_clipboard_item(self, item_id):
 
 @shared_task
 def sweap_expired_items():
-    expired_items = ClipboardItems.objects.filter(expired_at__lt = timezone.now())
+    expired_items = ClipboardItems.objects.filter(expires_at__lt=timezone.now())
     for item in expired_items:
         del_clipboard_item.delay(item.id)
 
