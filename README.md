@@ -8,6 +8,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Background Cleanup and Deployment](#background-cleanup-and-deployment)
+- [Running Redis and Celery Locally](#running-redis-and-celery-locally)
 - [Contributing](#contributing)
 
 ## Features
@@ -47,6 +48,46 @@
    ```bash
    python manage.py runserver
    ```
+
+## Running Redis and Celery Locally
+When `DEBUG=True`, AirShare uses a local Redis server as the Celery broker. `REDIS_URI` is optional; if it is not set, the application uses `redis://127.0.0.1:6379/0`.
+
+Install Redis using one of the options supported by your Windows setup, such as Docker, WSL, or Memurai. Then open separate terminals from the directory containing `manage.py`.
+
+1. Start Redis. For a Docker installation:
+   ```bash
+   docker run --name airshare-redis -p 6379:6379 -d redis:7
+   ```
+   If the container already exists, start it with:
+   ```bash
+   docker start airshare-redis
+   ```
+
+2. Activate the virtual environment in each terminal:
+   ```powershell
+   .\venv\Scripts\Activate.ps1
+   ```
+
+3. Start the Celery worker. On Windows, use the `solo` pool:
+   ```bash
+   celery -A airshare worker --loglevel=info --pool=solo
+   ```
+
+4. Start Celery Beat in another terminal:
+   ```bash
+   celery -A airshare beat --loglevel=info
+   ```
+
+5. Start Django in another terminal:
+   ```bash
+   python manage.py runserver
+   ```
+
+You can verify that Redis is responding with:
+```bash
+redis-cli ping
+```
+The expected response is `PONG`.
 
 ## Usage
 1. Open the application in your browser at `http://127.0.0.1:8000/`.
