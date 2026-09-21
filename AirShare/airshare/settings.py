@@ -154,7 +154,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 if DEBUG:
-    REDIS_URI = env('REDIS_URI')
+    REDIS_URI = env('REDIS_URI', default='redis://127.0.0.1:6379/0')
     CELERY_BROKER_URL = REDIS_URI
     CELERY_RESULT_BACKEND = REDIS_URI
     CELERY_ACCEPT_CONTENT = ['json']
