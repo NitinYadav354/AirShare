@@ -7,6 +7,7 @@
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Background Cleanup and Deployment](#background-cleanup-and-deployment)
 - [Contributing](#contributing)
 
 ## Features
@@ -52,6 +53,13 @@
 2. Paste your text or upload an image/document in the textbox.
 3. Click the "Generate Code" button.
 4. Share the generated code with others to allow them to access the content.
+
+## Background Cleanup and Deployment
+Clipboard items expire automatically after their configured lifetime.
+
+During local development, AirShare uses Celery with Redis to schedule deletion tasks in the background. The production deployment did not provide a continuously running Celery worker at no additional cost, so relying on Celery and Redis there would make expiry cleanup unreliable.
+
+For that reason, production performs cleanup synchronously during normal application requests, such as when a user submits or retrieves content. This keeps expired records and their uploaded files from being served without requiring a separate worker or Redis service. Because this approach is request-triggered, cleanup may wait until the next application request rather than running at an exact scheduled time.
 
 ## Contributing
 Contributions are welcome! Please follow these steps to contribute:
