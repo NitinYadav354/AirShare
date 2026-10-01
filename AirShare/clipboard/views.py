@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.http import JsonResponse
 from .models import ClipboardItems
 from .forms import ClipboardItemsForm
 from django.utils import timezone
 import cloudinary.uploader
-
+import cloudinary.utils
+import time
 if settings.DEBUG:
     from .tasks import del_clipboard_item
 
@@ -87,3 +89,24 @@ def fetch_clipboard(request):
         except ClipboardItems.DoesNotExist:
             return render(request, 'clipboard/Clipboard.html', {'error': "Not found", 'form': form})
     return render(request, 'clipboard/Clipboard.html', {'form': ClipboardItemsForm()})
+
+def generate_upload_signature(request):
+    timestamp = int(time.time())
+    
+    # We are putting uploads inside the 'uploads/documents' folder
+    params_to_sign = {
+        'timestamp': timestamp,
+        'folder': 'uploads/documents',
+    }
+    
+    signature = cloudinary.utils.api_sign_request(
+        params_to_sign,
+        cloudinary.config().api_secret
+    )
+    
+    return JsonResponse({
+        'signature': signature,
+        'timestamp': timestamp,
+        'api_key': cloudinary.config().api_key,
+        'cloud_name': cloudinary.config().cloud_name,
+    })
