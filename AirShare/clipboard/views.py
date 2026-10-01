@@ -16,11 +16,27 @@ def delete_expired_items():
     expired_items.delete()
 
 
+def extract_public_id(url):
+    if not url: return None
+    try:
+        parts = url.split('/upload/')
+        if len(parts) > 1:
+            path = parts[1]
+            if path.startswith('v') and '/' in path:
+                path = path.split('/', 1)[1]
+            return path.rsplit('.', 1)[0]
+    except Exception:
+        pass
+    return None
+
 def delete_clipboard_item(item):
-    if item.image and item.image.name:
-        cloudinary.uploader.destroy(item.image.name, resource_type='image')
-    if item.documents and item.documents.name:
-        cloudinary.uploader.destroy(item.documents.name, resource_type='raw')
+    image_id = extract_public_id(item.image_url)
+    if image_id:
+        cloudinary.uploader.destroy(image_id, resource_type='image')
+    
+    doc_id = extract_public_id(item.document_url)
+    if doc_id:
+        cloudinary.uploader.destroy(doc_id, resource_type='raw')
 
 
 def cleanup_expired_items():

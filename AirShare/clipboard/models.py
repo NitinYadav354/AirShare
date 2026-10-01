@@ -7,8 +7,8 @@ import random
 class ClipboardItems(models.Model):
     UniqueCode =models.CharField(max_length=4, unique=True)
     text = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='uploads/images', blank=True, null=True )
-    documents = models.FileField(upload_to='uploads/documents', blank=True, null=True )
+    image_url = models.CharField(max_length=500, blank=True, null=True)
+    document_url = models.CharField(max_length=500, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField(null=True, blank=True)
     isfetched = models.BooleanField(default=False)
