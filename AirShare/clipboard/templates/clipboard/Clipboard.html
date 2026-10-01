@@ -70,18 +70,18 @@
               <button onclick="CopyText()" class="btn copy-btn">
                 Copy Text
               </button>
-              {% endif %} {% if items.image %}
+              {% endif %} {% if items.image_url %}
               <img
-                src="{{ items.image.url }}"
+                src="{{ items.image_url }}"
                 class="image-result"
                 alt="Uploaded Image"
               />
               <button class="btn-download">
-                <a href="{{ items.image.url }}" download>Download Image</a>
+                <a href="{{ items.image_url }}" download>Download Image</a>
               </button>
-              {% endif %} {% if items.documents %}
+              {% endif %} {% if items.document_url %}
               <button class="btn-download">
-                <a href="{{ items.documents.url }}" download
+                <a href="{{ items.document_url }}" download
                   >Download Document</a
                 >
               </button>
@@ -112,6 +112,64 @@
               alert("Copy failed. Please try again.");
           }
       }
+    </script>
+    <script>
+      document.querySelector('#send-panel form').addEventListener('submit', async function(e) {
+          e.preventDefault(); 
+          
+          const form = e.target;
+          const submitBtn = form.querySelector('button[type="submit"]');
+          submitBtn.disabled = true;
+          submitBtn.innerText = "Uploading to Cloud...";
+
+          const imageInput = document.querySelector('input[name="ui_image"]');
+          const docInput = document.querySelector('input[name="ui_document"]');
+          
+          try {
+              let sigData = null;
+              if ((imageInput && imageInput.files.length > 0) || (docInput && docInput.files.length > 0)) {
+                  const sigResponse = await fetch('/api/generate-signature/');
+                  sigData = await sigResponse.json();
+              }
+              
+              async function uploadFile(file) {
+                  const formData = new FormData();
+                  formData.append('file', file);
+                  formData.append('api_key', sigData.api_key);
+                  formData.append('timestamp', sigData.timestamp);
+                  formData.append('signature', sigData.signature);
+                  formData.append('folder', 'uploads/documents');
+                  
+                  const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${sigData.cloud_name}/auto/upload`, {
+                      method: 'POST',
+                      body: formData
+                  });
+                  const uploadData = await uploadRes.json();
+                  return uploadData.secure_url;
+              }
+
+              if (imageInput && imageInput.files.length > 0) {
+                  const imageUrl = await uploadFile(imageInput.files[0]);
+                  document.querySelector('input[name="image_url"]').value = imageUrl;
+                  imageInput.value = ''; // clear
+              }
+              
+              if (docInput && docInput.files.length > 0) {
+                  const docUrl = await uploadFile(docInput.files[0]);
+                  document.querySelector('input[name="document_url"]').value = docUrl;
+                  docInput.value = ''; // clear
+              }
+
+              submitBtn.innerText = "Saving...";
+              form.submit();
+              
+          } catch (error) {
+              console.error("Upload failed", error);
+              alert("An error occurred during upload.");
+              submitBtn.disabled = false;
+              submitBtn.innerText = "Generate Code & Send";
+          }
+      });
     </script>
   </body>
 </html>
