@@ -16,11 +16,14 @@
 - Text sharing: Quickly share plain text snippets.
 - File sharing: Upload and share images and documents.
 - Unique code generation: Each pasted content generates a code for easy retrieval.
+- **High-Performance Ephemeral Storage**: Optimized PostgreSQL unlogged tables provide blazing-fast writes by removing WAL overhead for temporary clipboard items.
+- **Direct-to-Cloud Uploads**: Leverages Vanilla JS and secure Cloudinary signatures to upload files directly from the browser, bypassing the Django backend to save server memory and bandwidth.
 
 ## Technologies Used
-- **Backend**: Django
-- **Frontend**: HTML, CSS, JavaScript
-- **Database**: SQLite 
+- **Backend**: Django, PostgreSQL
+- **Frontend**: HTML, CSS, Vanilla JavaScript
+- **Database**: SQLite (Local), PostgreSQL (Production)
+- **Cloud Storage**: Cloudinary
 
 ## Installation
 1. Clone the repository:
